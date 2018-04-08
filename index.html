@@ -4,9 +4,9 @@
   <title>File Upload Example in AngularJS</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script></head>
 
-<body >
+<body ng-controller="fupController">
 
-    <div ng-controller="fupController">
+    <div >
         <input type="file" id="file" name="file" multiple 
             onchange="angular.element(this).scope().getFileDetails(this)" />
 
