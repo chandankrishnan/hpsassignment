@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="fupApp">
 <head>
   <title>File Upload Example in AngularJS</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
-</head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script></head>
 
-<body ng-app="fupApp">
+<body >
 
     <div ng-controller="fupController">
         <input type="file" id="file" name="file" multiple 
@@ -56,7 +55,7 @@
              dd=JSON.parse(objXhr.responseText)
             console.log(dd.path)
         }
-        $scope.label11=dd.path;
+        $scope.label11=JSON.stringify(dd.path);
         }
     });
 </script>
