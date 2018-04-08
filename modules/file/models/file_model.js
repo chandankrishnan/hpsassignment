@@ -70,5 +70,5 @@ function ReadTenline(con,filename ,cb) {
         pushdata = pushdata + con[con.length - i] + '\n';
         // console.log(pushdata)
     }
-    cb(null, pushdata+'\n\n')
+    cb(null, pushdata+'------########---------')
 }
