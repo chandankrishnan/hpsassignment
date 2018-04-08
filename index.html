@@ -21,7 +21,8 @@
 
     myApp.controller('fupController', function ($scope,$http) {
 
-        // GET THE FILE INFORMATION.
+        // GET THE FILE INFORMATION
+      $scope.label11='';
         $scope.getFileDetails = function (e) {
             $scope.files = [];
             $scope.$apply(function () {
