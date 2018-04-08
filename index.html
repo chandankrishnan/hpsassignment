@@ -12,7 +12,7 @@
 
         <input type="button" ng-click="uploadFiles()" value="Upload" />
         <br><br>
-        You entered {{label11}} 
+        <!-- You entered {{label11}}  -->
     </div>
 
 </body>
@@ -50,13 +50,15 @@
             // SEND FILE DETAILS TO THE API.
             
             objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
+            // objXhr.open("POST", "http://localhost:3008/file/read");
             objXhr.send(data);
             objXhr.onload = function() {
             // Do whatever with response
              dd=JSON.parse(objXhr.responseText)
-            console.log(dd.path)
+            alert(dd)
+            // $scope.label11=dd;
         }
-        $scope.label11=JSON.stringify(dd.path);
+        
         }
     });
 </script>

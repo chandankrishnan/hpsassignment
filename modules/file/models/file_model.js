@@ -6,9 +6,9 @@ var fs = require('fs')
 var async = require('async')
 var fs = require('fs');
 var pushdata = ''
+var filedata=''
 // var writeStream = fs.createWriteStream(path.resolve('modules/file/models/report.txt'));
 var filecount=0;
-var path = require('path');
 
 
 function Media() {
@@ -21,20 +21,11 @@ inherits(Media, EventEmitter)
 
 Media.prototype.insertFile = function (data, callback) {
     console.log("call")
-    // callback(null,"chandan")
-    fs.unlink(path.resolve('modules/file/models/report.txt'), function (err) {
-        if (err) {
-            console.error(err);
-        }
-        console.log("File deleted successfully!");
-    });
-    
-    
+
     var form = new multiparty.Form();
     var url = []
     form.parse(data, function (error, fields, files) {
         console.log("filesss",files)
-        var writeStream = fs.createWriteStream(path.resolve('modules/file/models/report.txt'));
         async.map(files.file, function (dd, i) {
             var readl = require('readl');
             filecount++
@@ -52,21 +43,22 @@ Media.prototype.insertFile = function (data, callback) {
             ReadTenline(content,dd.originalFilename, function (err, data) {
                 if (err) callback(err, null)
                 else {
-                    writeStream.write(data);
+                    filedata+=data
+                    if(files.file.length==filecount){
+                        console.log("callll eqqqq")
+                        callback(null, filedata)
+                        filecount=0
+                        filedata=''
+                    }
                 }
             })
-            if(files.file.length==filecount){
-                console.log("callll eqqqq")
-                callback(null, { "path": path.resolve('modules/file/models/report.txt') })
-                filecount=0
-            }
+            
         })
         
 
     })
 
 }
-
 
 module.exports = new Media()
 
