@@ -1,3 +1,6 @@
+/**
+ * @requires define require
+ */
 var express = require('express')
 var app = express()
 var router = express.Router()
@@ -27,4 +30,5 @@ var port = process.env.PORT || 3008;
 var server = app.listen(port, function () {
     console.log("Backedn API running on*** " + port);
 })
+
 module.exports = app;
