@@ -4,24 +4,30 @@
   <title>File Upload Example in AngularJS</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script></head>
 
-<body >
+<body ng-controller="fupController" >
 
-    <div ng-controller="fupController">
+    <div >
         <input type="file" id="file" name="file" multiple 
             onchange="angular.element(this).scope().getFileDetails(this)" />
 
         <input type="button" ng-click="uploadFiles()" value="Upload" />
-        <br><br>
-        <!-- You entered {{label11}}  -->
     </div>
+        <br><br>
+        Last 10 lines of file
+        <div class="display">
+            {{display}}
+            <img id="mySpinner" src="gears.gif" ng-show="loading" style="margin-top:200px"/>
+        </div>
+    
 
 </body>
 <script>
     var myApp = angular.module('fupApp', []);
 
     myApp.controller('fupController', function ($scope,$http) {
-
         // GET THE FILE INFORMATION.
+        $scope.loading = true;
+            $scope.display="";
         $scope.getFileDetails = function (e) {
             $scope.files = [];
             $scope.$apply(function () {
@@ -36,7 +42,7 @@
 
         // NOW UPLOAD THE FILES.
         $scope.uploadFiles = function () {
-
+            
             //FILL FormData WITH FILE DETAILS.
             var data = new FormData();
 
@@ -49,17 +55,23 @@
             var dd=''
             // SEND FILE DETAILS TO THE API.
             
-            objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
-            // objXhr.open("POST", "http://localhost:3008/file/read");
+            // objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
+            objXhr.open("POST", "http://localhost:3008/file/read");
             objXhr.send(data);
             objXhr.onload = function() {
             // Do whatever with response
              dd=JSON.parse(objXhr.responseText)
-            alert(dd)
-            // $scope.label11=dd;
+             $scope.display=dd;
+             $scope.loading=false;
+             console.log($scope.loading)
+             console.log($scope.display)
+            
+            
         }
         
         }
     });
 </script>
 </html>
+
+

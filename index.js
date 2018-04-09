@@ -20,11 +20,7 @@ app.use(function (req, res, next) {
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }))
 app.use(bodyParser.urlencoded({ extended: true }))
-app.get('/',function(req,res){
-    
-  res.sendFile(path.resolve('index.html'));
-
-});
+app.use(express.static('views'));
 
 app.use('/file', require('./modules/file/controllers/file.js'))
 var port = process.env.PORT || 3008;
