@@ -4,14 +4,14 @@
   <title>File Upload Example in AngularJS</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script></head>
 
-<body ng-controller="fupController" >
 
+<body ng-controller="fupController" >
     <div >
         <input type="file" id="file" name="file" multiple 
             onchange="angular.element(this).scope().getFileDetails(this)" />
 
         <input type="button" ng-click="uploadFiles()" value="Upload" />
-    </div>
+</div>
         <br><br>
         Last 10 lines of file
         <div class="display">
@@ -26,8 +26,9 @@
 
     myApp.controller('fupController', function ($scope,$http) {
         // GET THE FILE INFORMATION.
-        $scope.loading = true;
+       
             $scope.display="";
+
         $scope.getFileDetails = function (e) {
             $scope.files = [];
             $scope.$apply(function () {
@@ -42,7 +43,7 @@
 
         // NOW UPLOAD THE FILES.
         $scope.uploadFiles = function () {
-            
+            $scope.loading = true;
             //FILL FormData WITH FILE DETAILS.
             var data = new FormData();
 
@@ -55,8 +56,8 @@
             var dd=''
             // SEND FILE DETAILS TO THE API.
             
-            // objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
-            objXhr.open("POST", "http://localhost:3008/file/read");
+            objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
+            // objXhr.open("POST", "http://localhost:3008/file/read");
             objXhr.send(data);
             objXhr.onload = function() {
             // Do whatever with response
@@ -65,8 +66,7 @@
              $scope.loading=false;
              console.log($scope.loading)
              console.log($scope.display)
-            
-            
+        
         }
         
         }
