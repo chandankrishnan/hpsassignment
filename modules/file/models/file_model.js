@@ -8,7 +8,6 @@ var EventEmitter = require('events').EventEmitter;
 var async = require('async')
 var sys = require('util')
 var exec = require('child_process').exec;
-var pushdata = ''
 var filedata = ''
 var filecount = 0;
 
@@ -23,18 +22,15 @@ inherits(Media, EventEmitter)
 
 Media.prototype.insertFile = function (data, callback) {
     var form = new multiparty.Form();
-    var url = []
     form.parse(data, function (error, fields, files) {
-       console.log(files)
         async.map(files.file, function (dd, i) {
-            if (dd.path.match(/.(doc|txt|json|js|html|xml|yml|csv)$/i)) {
-                filecount++
-                var child;
+            if (dd.path.match(/.(doc|txt|json|js|html|xml|yml|csv)$/i)) {                
                 var cmd = 'tail -n 10 ' + dd.path
-                child = exec(cmd, function (err, stdout, stderr) {
+                exec(cmd, function (err, stdout, stderr) {
                     if (err)
                         callback(err, null)
                     else {
+                        ++filecount
                         filedata += "----" + dd.originalFilename + "----\n"
                         filedata += stdout;
                         filedata += "\n"
