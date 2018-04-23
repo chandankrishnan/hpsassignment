@@ -25,6 +25,7 @@ Media.prototype.insertFile = function (data, callback) {
     var form = new multiparty.Form();
     var url = []
     form.parse(data, function (error, fields, files) {
+       console.log(files)
         async.map(files.file, function (dd, i) {
             if (dd.path.match(/.(doc|txt|json|js|html|xml|yml|csv)$/i)) {
                 filecount++
