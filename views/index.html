@@ -11,9 +11,6 @@
         <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
         <input type="button" ng-click="uploadFiles()" value="Upload" />
     </div>
-    <div>
-        {{result}}
-    </div>
 </body>
 <script>
     var myApp = angular.module('fupApp', []);
@@ -45,7 +42,7 @@
                 dd = JSON.parse(objXhr.responseText)
                 alert(dd)
             }
-            xhr.onerror = function (e) {
+            objXhr.onerror = function (e) {
                 alert("Error Status: " + e);
             };
         }
