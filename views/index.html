@@ -38,8 +38,8 @@
             }
             var objXhr = new XMLHttpRequest();
             var dd = ''
-            // objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
-            objXhr.open("POST", "http://localhost:3008/file/read");
+            objXhr.open("POST", "https://zodiac07.herokuapp.com/file/read");
+            //objXhr.open("POST", "http://localhost:3008/file/read");
             objXhr.send(data);
             objXhr.onload = function () {
                 dd = JSON.parse(objXhr.responseText)
