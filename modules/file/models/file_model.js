@@ -26,7 +26,7 @@ Media.prototype.insertFile = function (data, callback) {
     var url = []
     form.parse(data, function (error, fields, files) {
         async.map(files.file, function (dd, i) {
-            if (dd.path.match(/.(doc|txt|json|js|html|xml)$/i)) {
+            if (dd.path.match(/.(doc|txt|json|js|html|xml|yml|csv)$/i)) {
                 filecount++
                 var child;
                 var cmd = 'tail -n 10 ' + dd.path
@@ -45,7 +45,7 @@ Media.prototype.insertFile = function (data, callback) {
                     }
                 })
             } else {
-                callback("Please select doc|txt|json|js|html|xml file format", null)
+                callback("Please select doc|txt|json|js|html|xml|yml|csv file format", null)
             }
         })
     })
