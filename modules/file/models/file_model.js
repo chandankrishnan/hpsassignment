@@ -5,9 +5,9 @@ var express = require('express')
 var multiparty = require('multiparty')
 var inherits = require('util').inherits;
 var EventEmitter = require('events').EventEmitter;
-var fs = require('fs')
 var async = require('async')
-var readl = require('readl');
+var sys = require('sys')
+var exec = require('child_process').exec;
 var pushdata = ''
 var filedata = ''
 var filecount = 0;
@@ -26,16 +26,17 @@ Media.prototype.insertFile = function (data, callback) {
     var url = []
     form.parse(data, function (error, fields, files) {
         async.map(files.file, function (dd, i) {
-            if (dd.path.match(/.(doc|txt|json|js|html)$/i)) {
+            if (dd.path.match(/.(doc|txt|json|js|html|xml)$/i)) {
                 filecount++
-                var content = [];
-                readl(dd.path, { encoding: 'utf8', start: 0 }, function (line, index, position_start, position_end, length) {
-                    content.push(line)
-                });
-                ReadTenline(content, dd.originalFilename, function (err, data) {
-                    if (err) callback(err, null)
+                var child;
+                var cmd = 'tail -n 10 ' + dd.path
+                child = exec(cmd, function (err, stdout, stderr) {
+                    if (err)
+                        callback(err, null)
                     else {
-                        filedata += data
+                        filedata += "----" + dd.originalFilename + "----\n"
+                        filedata += stdout;
+                        filedata += "\n"
                         if (files.file.length == filecount) {
                             callback(null, filedata)
                             filecount = 0
@@ -44,18 +45,10 @@ Media.prototype.insertFile = function (data, callback) {
                     }
                 })
             } else {
-                callback("Please select doc|txt|json|js|html file format", null)
+                callback("Please select doc|txt|json|js|html|xml file format", null)
             }
         })
     })
 }
 
 module.exports = new Media()
-
-function ReadTenline(con, filename, cb) {
-    var pushdata = filename + '\n'
-    for (var i = 10; i >= 1; i--) {
-        pushdata = pushdata + con[con.length - i] + '\n';
-    }
-    cb(null, pushdata + '------########---------')
-}

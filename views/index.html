@@ -9,38 +9,37 @@
 <body ng-controller="fupController">
     <div>
         <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
-
         <input type="button" ng-click="uploadFiles()" value="Upload" />
+    </div>
+    <div>
+        {{result}}
     </div>
 </body>
 <script>
     var myApp = angular.module('fupApp', []);
 
     myApp.controller('fupController', function ($scope, $http) {
-        // GET THE FILE INFORMATION.
         $scope.getFileDetails = function (e) {
             $scope.files = [];
             $scope.$apply(function () {
-                // STORE THE FILE OBJECT IN AN ARRAY.
                 for (var i = 0; i < e.files.length; i++) {
                     $scope.files.push(e.files[i])
                 }
             });
         };
 
-        // NOW UPLOAD THE FILES.
+        /**
+         * NOW UPLOAD THE FILES.
+         */
         $scope.uploadFiles = function () {
-            //FILL FormData WITH FILE DETAILS.
             var data = new FormData();
             for (var i in $scope.files) {
                 data.append("file", $scope.files[i]);
             }
-            // ADD LISTENERS.
             var objXhr = new XMLHttpRequest();
             var dd = ''
-            // SEND FILE DETAILS TO THE API.
-            objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
-            // objXhr.open("POST", "http://localhost:3008/file/read");
+            // objXhr.open("POST", "https://upworkreadfile.herokuapp.com/file/read");
+            objXhr.open("POST", "http://localhost:3008/file/read");
             objXhr.send(data);
             objXhr.onload = function () {
                 dd = JSON.parse(objXhr.responseText)

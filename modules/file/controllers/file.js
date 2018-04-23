@@ -1,7 +1,7 @@
 /**
  * @author chandan
  * @description Get one and more files from users 
- * and display the last 10 lines of each file
+ * and display the last 10 lines of each file using tail command
  */
 var express = require('express')
 var file_model = require('../models/file_model')
